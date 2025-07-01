@@ -88,6 +88,11 @@ The app requires the following permissions:
 - `RECEIVE_SMS`: To receive incoming SMS messages
 - `READ_SMS`: To read existing SMS messages (for testing)
 
+**Important Note**: On Android 10+ (API 29+), to receive SMS broadcasts, the app typically needs to be set as the default SMS app. This requires additional permissions and user consent. For testing purposes, you may need to:
+1. Grant SMS permissions when prompted
+2. Set the app as the default SMS handler (if required by your Android version)
+3. Or test on an emulator with SMS simulation capabilities
+
 ## Usage
 
 1. **Launch the App**: The app starts with the main SMS screen

@@ -9,12 +9,8 @@ import com.example.smsguard.data.model.SMSMessage
 import com.example.smsguard.data.model.SMSClassification
 import java.util.Date
 import java.util.UUID
-import javax.inject.Inject
 
 class SMSReceiver : BroadcastReceiver() {
-    
-    @Inject
-    lateinit var smsRepository: com.example.smsguard.data.repository.SMSRepository
     
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent?.action == Telephony.Sms.Intents.SMS_RECEIVED_ACTION) {
@@ -29,8 +25,7 @@ class SMSReceiver : BroadcastReceiver() {
                     isProcessed = false
                 )
                 
-                // Note: We'll need to inject the repository properly
-                // For now, we'll use a callback approach
+                // Use callback approach since BroadcastReceivers can't be injected with Hilt
                 onSMSReceived?.invoke(sms)
             }
         }
