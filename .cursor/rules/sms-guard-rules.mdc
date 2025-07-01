@@ -1,0 +1,45 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+
+# Application: SMS Guard
+
+We are developing an Android App that receives and process SMS acting a smishing (SMS phishing) filter.
+
+# Main functionality:
+The app receives an SMS, in the main screen it displays the message inmediately. At the same time, it process locally the SMS text with a language model (Gemma 3n) and classifies it a "smishing" or "benign".
+A small loader indicates the processing of the message.
+If the message is classified as benign, it simply attaches a small green mark to the SMS so that the user knows the SMS has been verified.
+If the message is classified as smishing, a red mark is attached to it indicating that the message is likely a malicious one. Whe the user touches the red mark, a new screen is open where the user gets information about why 
+the message is considered malicious.
+In summary, there are only 2 screens: the main screen where the SMS will be displayed along with a verification mark and the explanation screen.
+
+
+## Technologies
+These are the technologies we will use:
+- Jetpack Compose as system interfaces.
+- Material 3.
+- Kotlin.
+- ViewModels of Architecture Components for the communication between the UI and the data layer.
+- Hilt as dependency injector
+- Google AI Edge to handle the language model for classification of SMS.
+
+
+## Architecture
+We will have a simple architecture where we will have:
+- UI in Compose
+- Communication with the data layer with MVVM
+
+
+## Extra rules
+- Always when you generate code, compile to make sure there are no problems. For that, use compileDebugKotlin.
+- Eventhough you might think that the build.gradle.kts are wrong, those that are right now in context are correct. If you need to modify libs.versions or gradle files, simply add the new things and don't modify what exists already.
+
