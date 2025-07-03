@@ -65,7 +65,7 @@ fun SMSItem(
                     Spacer(modifier = Modifier.height(8.dp))
                     
                     Text(
-                        text = formatTimestamp(sms.timestamp),
+                        text = formatTimestamp(Date(sms.timestamp)),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

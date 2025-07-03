@@ -1,14 +1,13 @@
 package com.example.smsguard.data.model
 
-import java.util.Date
-
 data class SMSMessage(
     val id: String,
     val sender: String,
     val message: String,
-    val timestamp: Date,
+    val timestamp: Long,
     val classification: SMSClassification = SMSClassification.PENDING,
-    val isProcessed: Boolean = false
+    val isProcessed: Boolean = false,
+    val isSmishing: Boolean? = null
 )
 
 enum class SMSClassification {

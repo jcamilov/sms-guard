@@ -68,7 +68,7 @@ class SMSViewModel @Inject constructor(
                     id = UUID.randomUUID().toString(),
                     sender = "+1234567890",
                     message = "Your package has been delivered. Click here to track: http://bit.ly/package123",
-                    timestamp = Date(),
+                    timestamp = System.currentTimeMillis(),
                     classification = SMSClassification.SMISHING,
                     isProcessed = true
                 ),
@@ -76,7 +76,7 @@ class SMSViewModel @Inject constructor(
                     id = UUID.randomUUID().toString(),
                     sender = "Bank of America",
                     message = "Your account has been suspended. Call 1-800-BANK immediately to verify your identity.",
-                    timestamp = Date(System.currentTimeMillis() - 300000), // 5 minutes ago
+                    timestamp = System.currentTimeMillis() - 300000, // 5 minutes ago
                     classification = SMSClassification.SMISHING,
                     isProcessed = true
                 ),
@@ -84,7 +84,7 @@ class SMSViewModel @Inject constructor(
                     id = UUID.randomUUID().toString(),
                     sender = "Mom",
                     message = "Hi honey, don't forget to pick up milk on your way home!",
-                    timestamp = Date(System.currentTimeMillis() - 600000), // 10 minutes ago
+                    timestamp = System.currentTimeMillis() - 600000, // 10 minutes ago
                     classification = SMSClassification.BENIGN,
                     isProcessed = true
                 ),
@@ -92,7 +92,7 @@ class SMSViewModel @Inject constructor(
                     id = UUID.randomUUID().toString(),
                     sender = "Amazon",
                     message = "Your order #12345 has been shipped and will arrive tomorrow.",
-                    timestamp = Date(System.currentTimeMillis() - 900000), // 15 minutes ago
+                    timestamp = System.currentTimeMillis() - 900000, // 15 minutes ago
                     classification = SMSClassification.BENIGN,
                     isProcessed = true
                 )

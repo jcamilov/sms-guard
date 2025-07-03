@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.provider.Telephony
-import android.telephony.SmsMessage
 import com.example.smsguard.data.model.SMSMessage
 import com.example.smsguard.data.model.SMSClassification
 import java.util.Date
@@ -20,7 +19,7 @@ class SMSReceiver : BroadcastReceiver() {
                     id = UUID.randomUUID().toString(),
                     sender = smsMessage.originatingAddress ?: "Unknown",
                     message = smsMessage.messageBody ?: "",
-                    timestamp = Date(smsMessage.timestampMillis),
+                    timestamp = smsMessage.timestampMillis,
                     classification = SMSClassification.PENDING,
                     isProcessed = false
                 )
