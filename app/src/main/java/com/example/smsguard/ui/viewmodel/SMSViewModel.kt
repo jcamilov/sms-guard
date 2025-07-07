@@ -6,6 +6,7 @@ import com.example.smsguard.data.model.SMSMessage
 import com.example.smsguard.data.model.SMSClassification
 import com.example.smsguard.data.repository.SMSRepository
 import com.example.smsguard.receiver.SMSReceiver
+import com.example.smsguard.service.AIClassifier
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SMSViewModel @Inject constructor(
-    private val smsRepository: SMSRepository
+    private val smsRepository: SMSRepository,
+    private val aiClassifier: AIClassifier
 ) : ViewModel() {
     
     private val _uiState = MutableStateFlow(SMSUiState())
@@ -52,13 +54,24 @@ class SMSViewModel @Inject constructor(
     }
     
     private suspend fun processSMSWithAI(sms: SMSMessage) {
-        // TODO: Implement AI classification with Gemma 3n
-        // For now, we'll simulate processing
-        val updatedSMS = sms.copy(
-            classification = SMSClassification.BENIGN, // Placeholder
-            isProcessed = true
-        )
-        smsRepository.updateSMS(updatedSMS)
+        try {
+            // Use AI classifier to classify the SMS
+            val classification = aiClassifier.classifySMS(sms.message)
+            
+            val updatedSMS = sms.copy(
+                classification = classification,
+                isProcessed = true
+            )
+            smsRepository.updateSMS(updatedSMS)
+            
+        } catch (e: Exception) {
+            // Fallback to UNCLASSIFIED if AI processing fails
+            val updatedSMS = sms.copy(
+                classification = SMSClassification.UNCLASSIFIED,
+                isProcessed = true
+            )
+            smsRepository.updateSMS(updatedSMS)
+        }
     }
     
     private fun addTestMessages() {
@@ -106,17 +119,33 @@ class SMSViewModel @Inject constructor(
     
     fun onSMSItemClick(sms: SMSMessage) {
         if (sms.classification == SMSClassification.SMISHING) {
-            _uiState.value = _uiState.value.copy(
-                selectedSMS = sms,
-                showExplanationDialog = true
-            )
+            viewModelScope.launch {
+                try {
+                    // Generate AI explanation for the smishing message
+                    val explanation = aiClassifier.getExplanation(sms)
+                    
+                    _uiState.value = _uiState.value.copy(
+                        selectedSMS = sms,
+                        showExplanationDialog = true,
+                        explanationText = explanation
+                    )
+                } catch (e: Exception) {
+                    // Fallback explanation if AI fails
+                    _uiState.value = _uiState.value.copy(
+                        selectedSMS = sms,
+                        showExplanationDialog = true,
+                        explanationText = "This message contains suspicious elements that may indicate a phishing attempt."
+                    )
+                }
+            }
         }
     }
     
     fun dismissExplanationDialog() {
         _uiState.value = _uiState.value.copy(
             showExplanationDialog = false,
-            selectedSMS = null
+            selectedSMS = null,
+            explanationText = ""
         )
     }
 }
@@ -125,5 +154,6 @@ data class SMSUiState(
     val messages: List<SMSMessage> = emptyList(),
     val isLoading: Boolean = true,
     val selectedSMS: SMSMessage? = null,
-    val showExplanationDialog: Boolean = false
+    val showExplanationDialog: Boolean = false,
+    val explanationText: String = ""
 ) 

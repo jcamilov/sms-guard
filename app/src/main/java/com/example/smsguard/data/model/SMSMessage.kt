@@ -13,5 +13,6 @@ data class SMSMessage(
 enum class SMSClassification {
     PENDING,
     BENIGN,
-    SMISHING
+    SMISHING,
+    UNCLASSIFIED
 } 

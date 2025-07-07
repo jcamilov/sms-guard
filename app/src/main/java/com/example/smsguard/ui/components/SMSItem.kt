@@ -7,6 +7,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.filled.Help
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -91,7 +93,7 @@ private fun ClassificationIndicator(
 ) {
     val (icon, tint, backgroundColor) = when {
         !isProcessed -> Triple(
-            Icons.Filled.CheckCircle,
+            Icons.Filled.Schedule,
             MaterialTheme.colorScheme.primary,
             MaterialTheme.colorScheme.primaryContainer
         )
@@ -105,8 +107,13 @@ private fun ClassificationIndicator(
             Color.Red,
             Color(0xFFFFEBEE)
         )
+        classification == SMSClassification.UNCLASSIFIED -> Triple(
+            Icons.Filled.Help,
+            Color(0xFFFFA726), // Orange
+            Color(0xFFFFF3E0)
+        )
         else -> Triple(
-            Icons.Filled.CheckCircle,
+            Icons.Filled.Schedule,
             MaterialTheme.colorScheme.primary,
             MaterialTheme.colorScheme.primaryContainer
         )
@@ -127,6 +134,7 @@ private fun ClassificationIndicator(
                 SMSClassification.BENIGN -> "Benign message"
                 SMSClassification.SMISHING -> "Smishing detected"
                 SMSClassification.PENDING -> "Processing"
+                SMSClassification.UNCLASSIFIED -> "Unable to classify"
             },
             tint = tint,
             modifier = Modifier.size(24.dp)

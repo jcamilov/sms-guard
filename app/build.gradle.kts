@@ -84,4 +84,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.androidx.material.icons.extended)
+    implementation("org.tensorflow:tensorflow-lite-task-text:0.4.4")
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
+    implementation("org.tensorflow:tensorflow-lite-metadata:0.4.4")
+    //implementation("com.google.ai.edge:edge-android:1.0.0") // SDK Google AI Edge
+    // MediaPipe LLM Inference
+    implementation("com.google.mediapipe:tasks-genai:0.10.25")
+
 }

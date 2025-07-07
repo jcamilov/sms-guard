@@ -109,6 +109,7 @@ fun SMSScreen(
             if (uiState.showExplanationDialog && uiState.selectedSMS != null) {
                 ExplanationDialog(
                     sms = uiState.selectedSMS!!,
+                    explanationText = uiState.explanationText,
                     onDismiss = viewModel::dismissExplanationDialog
                 )
             }
@@ -234,6 +235,7 @@ private fun SMSListScreen(
 @Composable
 private fun ExplanationDialog(
     sms: SMSMessage,
+    explanationText: String,
     onDismiss: () -> Unit
 ) {
     AlertDialog(
@@ -265,6 +267,17 @@ private fun ExplanationDialog(
                 )
                 Text(
                     text = sms.message,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "AI Analysis:",
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Medium
+                )
+                Text(
+                    text = explanationText.ifEmpty { "Unable to generate AI explanation." },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
