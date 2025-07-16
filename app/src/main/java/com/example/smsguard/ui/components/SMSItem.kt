@@ -1,5 +1,6 @@
 package com.example.smsguard.ui.components
 
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,10 +11,11 @@ import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.smsguard.data.model.SMSMessage
@@ -128,18 +130,46 @@ private fun ClassificationIndicator(
             ),
         contentAlignment = Alignment.Center
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = when (classification) {
-                SMSClassification.BENIGN -> "Benign message"
-                SMSClassification.SMISHING -> "Smishing detected"
-                SMSClassification.PENDING -> "Processing"
-                SMSClassification.UNCLASSIFIED -> "Unable to classify"
-            },
-            tint = tint,
-            modifier = Modifier.size(24.dp)
-        )
+        if (!isProcessed) {
+            // Animated spinner for processing
+            ProcessingSpinner(tint = tint)
+        } else {
+            Icon(
+                imageVector = icon,
+                contentDescription = when (classification) {
+                    SMSClassification.BENIGN -> "Benign message"
+                    SMSClassification.SMISHING -> "Smishing detected"
+                    SMSClassification.PENDING -> "Processing"
+                    SMSClassification.UNCLASSIFIED -> "Unable to classify"
+                },
+                tint = tint,
+                modifier = Modifier.size(24.dp)
+            )
+        }
     }
+}
+
+@Composable
+private fun ProcessingSpinner(tint: Color) {
+    val infiniteTransition = rememberInfiniteTransition(label = "spinner")
+    val rotation by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "rotation"
+    )
+    
+    Icon(
+        imageVector = Icons.Filled.Schedule,
+        contentDescription = "Processing message",
+        tint = tint,
+        modifier = Modifier
+            .size(24.dp)
+            .graphicsLayer(rotationZ = rotation)
+    )
 }
 
 private fun formatTimestamp(timestamp: Date): String {
