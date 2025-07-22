@@ -136,4 +136,6 @@ app/src/main/assets/models/**/*.onnx
 app/src/main/assets/models/**/*.pb
 app/src/main/assets/models/**/*.pkl
 app/src/main/assets/models/**/*.h5
-app/src/main/assets/models/**/*.md
+app/src/main/assets/models/**/*.json
+# Allow README files in models directory
+!app/src/main/assets/models/**/README.md
