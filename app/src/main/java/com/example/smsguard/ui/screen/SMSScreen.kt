@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Message
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -105,6 +106,14 @@ fun SMSScreen(
                 }
             }
             
+            // Background processing indicator
+            if (uiState.isProcessing) {
+                BackgroundProcessingIndicator(
+                    processingStatus = uiState.processingStatus,
+                    memoryInfo = uiState.memoryInfo
+                )
+            }
+            
             // Explanation Dialog
             if (uiState.showExplanationDialog && uiState.selectedSMS != null) {
                 ExplanationDialog(
@@ -113,6 +122,63 @@ fun SMSScreen(
                     onDismiss = viewModel::dismissExplanationDialog
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun BackgroundProcessingIndicator(
+    processingStatus: String,
+    memoryInfo: String
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(24.dp),
+                strokeWidth = 2.dp
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = "Processing SMS...",
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Medium
+                )
+                if (processingStatus.isNotEmpty()) {
+                    Text(
+                        text = processingStatus,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                if (memoryInfo.isNotEmpty()) {
+                    Text(
+                        text = memoryInfo,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+            Icon(
+                imageVector = Icons.Default.Info,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(20.dp)
+            )
         }
     }
 }

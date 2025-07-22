@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Performance and memory optimization settings -->
+    
+    <!-- Enable hardware acceleration -->
+    <bool name="config_enableHardwareAcceleration">true</bool>
+    
+    <!-- Memory optimization settings -->
+    <integer name="config_largeHeapSize">512</integer>
+    <bool name="config_enableMemoryOptimization">true</bool>
+    
+    <!-- AI model settings -->
+    <integer name="config_aiTimeoutMs">15000</integer>
+    <integer name="config_maxRetries">2</integer>
+    <integer name="config_embeddingDimension">384</integer>
+    <integer name="config_maxSequenceLength">128</integer>
+    
+    <!-- UI performance settings -->
+    <integer name="config_maxSmsItems">100</integer>
+    <bool name="config_enableLazyLoading">true</bool>
+    
+</resources> 

@@ -127,3 +127,13 @@ cmake-build-*/
 
 # Android Studio 4.1+
 .idea/deploymentTargetDropDown.xml
+
+# AI Models - These should not be in git repository
+app/src/main/assets/models/**/*.task
+# app/src/main/assets/models/**/*.tflite
+app/src/main/assets/models/**/*.bin
+app/src/main/assets/models/**/*.onnx
+app/src/main/assets/models/**/*.pb
+app/src/main/assets/models/**/*.pkl
+app/src/main/assets/models/**/*.h5
+app/src/main/assets/models/**/*.md

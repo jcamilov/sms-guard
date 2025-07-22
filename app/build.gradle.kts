@@ -90,5 +90,8 @@ dependencies {
     //implementation("com.google.ai.edge:edge-android:1.0.0") // SDK Google AI Edge
     // MediaPipe LLM Inference
     implementation("com.google.mediapipe:tasks-genai:0.10.25")
+    
+    // Gson for JSON parsing
+    implementation("com.google.code.gson:gson:2.10.1")
 
 }

@@ -9,6 +9,7 @@
 cd C:\Users\la_DevAdmin3\AppData\Local\Android\Sdk\platform-tools\ 
 ./adb emu sms send 111 "Hey, what are u up to?"
 ./adb emu sms send 222 "You have tax return unclaimed. Click for more info https://tax-return.ru/unpaid"
+./adb emu sms send 15228588585 "You have tax return unclaimed. Click for more info https://tax-return.ru/unpaid"
 
 
 # App install (from terminal AS)
